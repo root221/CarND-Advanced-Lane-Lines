@@ -50,23 +50,24 @@ To demonstrate this step, I will describe how I apply the distortion correction 
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-I used a combination of color and gradient thresholds to generate a binary image.
 The code was below the title "Find a good threshold for images".
+I used a combination of color and gradient thresholds to generate a binary image.
 
 ![alt text][image3]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
 My code for perspective transform was below the title "Find perspective transform matrix".
-First, I undistorted the image, then I found four points to circle the area within the lane. Next, I found the best four destination points by trying different value and seeing the result, then used the `cv2.getPerspectiveTransform()` function to get the transform matrix. After that, I used `cv2.warpPerspective` to warp the "test_images/straight_lines1.jpg" image.
+First,I undistorted the image, then I found four points to circle the area within the lane.Next,I found the best four destination points by trying different value and seeing the result,then used the `cv2.getPerspectiveTransform()` function to get the transform matrix.After that,I used `cv2.warpPerspective` to warp the image "test_images/straight_lines1.jpg".
 
-I verified that my perspective transform was working as expected by drawing two parallel line on the warped image.  Here is the result:
+I verified that my perspective transform was working as expected by drawing two parallel line on the warped image.Here is the result:
 
 ![alt text][image4]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+The code was under the title "Detect lane pixels and fit to find the lane boundary".
+
 
 ![alt text][image5]
 
