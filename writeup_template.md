@@ -17,7 +17,15 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
+[//]: # (Image References)
 
+[image1]: ./output_images/undistort_output.png "Undistorted"
+[image2]: ./test_images/test1.jpg "Road Transformed"
+[image3]: ./examples/binary_combo_example.jpg "Binary Example"
+[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
+[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
+[image6]: ./examples/example_output.jpg "Output"
+[video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
@@ -68,16 +76,23 @@ I verified that my perspective transform was working as expected by drawing two 
 
 The code was under the title "Detect lane pixels and fit to find the lane boundary".
 
+I identified lane-line pixels with 5 steps.First,I used 390(pixel) and 920(pixel) as the base of the lane lines and used that as starting point for where to search for the lines,then I used a sliding window,to found and followed the lines up to the top of the image.Next,I used the points I found to fit a second order polynomial.After that, I used the line I found from the first image as a base to found the lines for the following pictures,then fitted to a new second order polynomial.
 
 ![alt text][image5]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+The code for calculated the radius of curvature of the lane and the position was in function `fit()` (the second half) and `process_image()` (under the comment # vehicle position)respectively.
+
+I calculated the radius with 3 step.First turn the pixels I found from pixels space to meters,then fit to another second order polynomial,then I used the formula from the lecture to calculate the radius.
+
+I calculated the position by finding the midpoint of the left and right lane,then subtracted 640(the midpoint of the image).After that,converted the value from pixels space to meters.
+
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+The code for this part was below the title 
+"Try on one image".  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
@@ -95,4 +110,7 @@ Here's a [link to my video result](./output.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+It was not robust enough when there was shadow when I first tried with only S channel and gradient thresholds (the video was output.mp4).It was much more robust after I tried L channel thresholds.
+ 
+It will fail when it is very dark,like the image from the challenge_video.mp4,I think maybe I will just use the polynomial I found from previous image and fit it to the new image since the lane doesn't change much.
+ 
